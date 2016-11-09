@@ -45,8 +45,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\SnakeBody.cs" />
-     <Compile Include="Assets\SnakeMovement.cs" />
+     <Compile Include="Assets\Scripts\SnakeBody.cs" />
+     <Compile Include="Assets\Scripts\SnakeMovement.cs" />
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>

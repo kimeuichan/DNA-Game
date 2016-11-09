@@ -1,9 +1,8 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/SnakeMovement.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/SnakeMovement.cs">
     <Files>
-      <File FileName="Assets/SnakeMovement.cs" Line="26" Column="1" />
-      <File FileName="Assets/SnakeBody.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/SnakeMovement.cs" Line="81" Column="29" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
