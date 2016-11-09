@@ -1,8 +1,13 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/SnakeMovement.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/NetworkMangerScript.cs">
     <Files>
-      <File FileName="Assets/Scripts/SnakeMovement.cs" Line="81" Column="29" />
+      <File FileName="Assets/Scripts/NetworkMangerScript.cs" Line="25" Column="44" />
+      <File FileName="Assets/Scripts/SnakeMovement.cs" Line="291" Column="2" />
+      <File FileName="Assets/Scripts/OrbScript.cs" Line="4" Column="17" />
+      <File FileName="Assets/Scripts/OnlineSyncScript.cs" Line="40" Column="2" />
+      <File FileName="Assets/Scripts/CollisionNetworkScript.cs" Line="74" Column="2" />
+      <File FileName="Assets/Scripts/SnakeBody.cs" Line="30" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
