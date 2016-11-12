@@ -183,8 +183,6 @@ public class SnakeMovement : Photon.MonoBehaviour {
 	public float bodyPartFollowTimeWalking = 0.19f;
 	public float bodyPartFollowTimeRunning = 0.1f;
 	void Running(){
-
-
 		if(bodyParts.Count > 2){
 			if(Input.GetMouseButtonDown(0)){
 				speed = speedWhileRunnin;

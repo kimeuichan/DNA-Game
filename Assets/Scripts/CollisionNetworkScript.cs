@@ -16,7 +16,6 @@ public class CollisionNetworkScript : Photon.MonoBehaviour {
 	public Transform bodyObject;
 	void OnCollisionEnter(Collision other){
 		if(other.transform.tag == "Orb"){
-
 			if(photonView.isMine){
 				photonView.RPC("AddThisSnakeNewBodyPart",PhotonTargets.AllBuffered, gameObject.transform.name);
 				photonView.RPC("DeleteOrbForOthers", PhotonTargets.AllBuffered, other.gameObject.name);
