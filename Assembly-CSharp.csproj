@@ -119,10 +119,10 @@
      <Compile Include="Assets\PhotonChatApi\ChatState.cs" />
      <Compile Include="Assets\PhotonChatApi\ChatUserStatus.cs" />
      <Compile Include="Assets\PhotonChatApi\IChatClientListener.cs" />
+     <Compile Include="Assets\Scripts\Client Manger.cs" />
      <Compile Include="Assets\Scripts\CollisionNetworkScript.cs" />
      <Compile Include="Assets\Scripts\Login.cs" />
      <Compile Include="Assets\Scripts\NetworkClient.cs" />
-     <Compile Include="Assets\Scripts\NetworkManagerSript.cs" />
      <Compile Include="Assets\Scripts\OnlineSyncScript.cs" />
      <Compile Include="Assets\Scripts\OrbScript.cs" />
      <Compile Include="Assets\Scripts\PB_handler.cs" />

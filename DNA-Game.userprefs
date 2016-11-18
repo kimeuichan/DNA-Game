@@ -1,15 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\NetworkClient.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Login.cs">
     <Files>
       <File FileName="Assets\Scripts\OrbScript.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\SnakeMovement.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\NetworkManagerSript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Login.cs" Line="18" Column="28" />
-      <File FileName="Assets\Scripts\PB_header.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Protocol.cs" Line="66" Column="33" />
-      <File FileName="Assets\Scripts\PB_handler.cs" Line="7" Column="2" />
-      <File FileName="Assets\Scripts\NetworkClient.cs" Line="37" Column="2" />
+      <File FileName="Assets\Scripts\NetworkClient.cs" Line="37" Column="32" />
+      <File FileName="Assets\Scripts\Login.cs" Line="20" Column="78" />
+      <File FileName="Assets\Scripts\Client Manger.cs" Line="13" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
