@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using System.Text;
 
 public class NetworkClient : MonoBehaviour{
 
@@ -70,8 +71,11 @@ public class NetworkClient : MonoBehaviour{
 	}
 
 	private void RecevieData(IAsyncResult iar){
+		Debug.Log ("Recevie");
 		Socket remote = (Socket)iar.AsyncState;
 		int recv = remote.EndReceive (iar);
+		string stringData = Encoding.UTF8.GetString (data, 0, recv);
+		Debug.Log (stringData);
 	}
 
 	public void Send(byte[] data, int size, DnaInfo.packet_type protocolType){
@@ -99,6 +103,7 @@ public class NetworkClient : MonoBehaviour{
 
 	//send callback
 	private void SendData(IAsyncResult iar){
+		Debug.Log ("Send Callback");
 		Socket remote = (Socket)iar.AsyncState;
 		int sent = remote.EndSend (iar);
 		remote.BeginReceive (data, 0, size, SocketFlags.None, new AsyncCallback (RecevieData), remote);

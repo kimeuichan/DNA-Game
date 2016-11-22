@@ -26,9 +26,8 @@ public class Login : MonoBehaviour {
 
 	void WindowFuction(int windowId){
 		usernameString = GUI.TextField (new Rect (Screen.width / 3, 2 * Screen.width / 5, Screen.width / 3, Screen.height / 5), usernameString, 10);
-
 		if (GUI.Button (new Rect (Screen.width / 2, 4 * Screen.height / 5, Screen.width / 8, Screen.height / 8), "Login")) {
-			if (usernameString != null) {
+			if (usernameString != null && usernameString.Length != 0) {
 				// Set Id
 				loginReq.Id = usernameString;
 
@@ -38,6 +37,7 @@ public class Login : MonoBehaviour {
 
 				// Data Send
 				client.Send (send_data, send_data.Length, (int)DnaInfo.packet_type.LoginReq);
+				GUI.Label (new Rect (Screen.width / 3, 35 * Screen.height / 100, Screen.width / 5, Screen.height / 8), "Username");
 			}
 		}
 	}
