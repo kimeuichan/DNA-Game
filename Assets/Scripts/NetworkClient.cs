@@ -7,32 +7,38 @@ using UnityEngine;
 using System.Text;
 
 public class NetworkClient : MonoBehaviour{
-
+	public class AsyncObject {
+		public Byte[] Buffer;
+		public Socket WorkingSocket;
+		public AsyncObject(Int32 bufferSize) {
+			this.Buffer = new Byte[bufferSize];
+		}
+	}
 	//server ip, port
 	string serverIp = "35.163.251.160";
 	int serverPort = 31486;
-	IPEndPoint iep;
+
+	private AsyncCallback m_fnReceiveHandler;
+	private AsyncCallback m_fnSendHandler;
 
 	//소켓으로 받을 데이터 선언
-	private byte[] data = new byte[1024];
-	private int size = 1024;
 
 	private Boolean isConnected;
-	Socket m_client;
+	Socket m_client = null;
 
 	void Start(){
+		m_fnReceiveHandler = handleDataRecive;
+		m_fnSendHandler = handleDataSend;
 		StartClient ();
 	}
 
 	public void StartClient(){
-		// Create EndPoint
-		iep = new IPEndPoint(IPAddress.Parse(serverIp), serverPort);
 		// Create a TCP/IP socket.
-		Socket newsocket = new Socket (AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
+		Socket newsocket = new Socket (AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
+		isConnected = false;
 		// Conncet to the remote endpoint
 		try{
-			newsocket.BeginConnect(iep, new AsyncCallback(Connected), newsocket);
+			m_client.Connect(serverIp, serverPort);
 			isConnected = true;
 
 			Application.LoadLevel("Login");
@@ -43,6 +49,12 @@ public class NetworkClient : MonoBehaviour{
 			isConnected = false;
 			Debug.Log("UnConeected");
 			Debug.Log (e.ToString());
+		}
+
+		if (isConnected) {
+			AsyncObject ao = new AsyncObject (4096);
+			ao.WorkingSocket = m_client;
+			m_client.BeginReceive (ao.Buffer, 0, ao.Buffer.Length, SocketFlags.None, m_fnReceiveHandler, ao);
 		}
 	}
 
@@ -57,28 +69,33 @@ public class NetworkClient : MonoBehaviour{
 		}
 	}
 
-	private void Connected(IAsyncResult iar){
-		m_client = (Socket)iar.AsyncState;
-		// Connect Sucess
-		try{
-			m_client.EndConnect(iar);
-			m_client.BeginReceive(data, 0,size, SocketFlags.None, new AsyncCallback(RecevieData), m_client);
-		}
-		// Connect Fail
-		catch{
-			
-		}
-	}
-
-	private void RecevieData(IAsyncResult iar){
+	private void handleDataRecive(IAsyncResult ar){
 		Debug.Log ("Recevie");
-		Socket remote = (Socket)iar.AsyncState;
-		int recv = remote.EndReceive (iar);
-		string stringData = Encoding.UTF8.GetString (data, 0, recv);
-		Debug.Log (stringData);
+		AsyncObject ao = (AsyncObject)ar.AsyncState;
+
+		Int32 recvBytes;
+		try{
+			recvBytes = ao.WorkingSocket.EndReceive(ar);
+		}catch{
+			return;
+		}
+
+		if (recvBytes > 0) {
+			Byte[] msgByte = new Byte[recvBytes];
+			Array.Copy (ao.Buffer, msgByte, recvBytes);
+		}
+
+		try{
+			ao.WorkingSocket.BeginReceive(ao.Buffer, 0, ao.Buffer.Length, SocketFlags.None, m_fnReceiveHandler, ao);
+		}catch{
+			return;
+		}
 	}
 
 	public void Send(byte[] data, int size, DnaInfo.packet_type protocolType){
+
+		AsyncObject ao = new AsyncObject (1);
+
 		//make header
 		PB_header header = new PB_header();
 		header.type = protocolType;
@@ -98,15 +115,24 @@ public class NetworkClient : MonoBehaviour{
 		System.Buffer.BlockCopy(data, 0, send_data, headerArray.Length, data.Length);
 
 		//data send
-		m_client.BeginSend(send_data, 0, data.Length, SocketFlags.None, new AsyncCallback(SendData), m_client);
+		m_client.BeginSend(send_data, 0, send_data.Length, SocketFlags.None, m_fnSendHandler, ao);
 	}
 
 	//send callback
-	private void SendData(IAsyncResult iar){
-		Debug.Log ("Send Callback");
-		Socket remote = (Socket)iar.AsyncState;
-		int sent = remote.EndSend (iar);
-		remote.BeginReceive (data, 0, size, SocketFlags.None, new AsyncCallback (RecevieData), remote);
+	private void handleDataSend(IAsyncResult ar){
+		AsyncObject ao = (AsyncObject)ar.AsyncState;
+
+		Int32 sentBytes;
+		try{
+			sentBytes = ao.WorkingSocket.EndSend(ar);
+		}catch{
+			return;
+		}
+
+		if(sentBytes > 0){
+			Byte[] msgByte = new Byte[sentBytes];
+			Array.Copy (ao.Buffer, msgByte, sentBytes);
+		}
 	}
 
 	void Awake() {
