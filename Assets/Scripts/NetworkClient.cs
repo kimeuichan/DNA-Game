@@ -2,7 +2,6 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using System.Text;
 
@@ -92,27 +91,9 @@ public class NetworkClient : MonoBehaviour{
 		}
 	}
 
-	public void Send(byte[] data, int size, DnaInfo.packet_type protocolType){
+	public void Send(byte[] send_data){
 
 		AsyncObject ao = new AsyncObject (1);
-
-		//make header
-		PB_header header = new PB_header();
-		header.type = protocolType;
-		header.size = data.Length;
-
-		//header -> byte array
-		int headerSize = Marshal.SizeOf(header);
-		byte[] headerArray = new byte[size];
-		IntPtr ptr = Marshal.AllocHGlobal(size);
-		Marshal.StructureToPtr(header, ptr, true);
-		Marshal.Copy(ptr, headerArray, 0, headerSize);
-		Marshal.FreeHGlobal(ptr);
-
-		//byte array merge
-		byte[] send_data = new byte[data.Length+headerArray.Length];
-		System.Buffer.BlockCopy(headerArray, 0, send_data, 0, headerArray.Length);
-		System.Buffer.BlockCopy(data, 0, send_data, headerArray.Length, data.Length);
 
 		//data send
 		m_client.BeginSend(send_data, 0, send_data.Length, SocketFlags.None, m_fnSendHandler, ao);
