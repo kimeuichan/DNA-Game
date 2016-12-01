@@ -16,6 +16,7 @@ public class NetworkClient : MonoBehaviour{
 	//server ip, port
 	string serverIp = "35.163.251.160";
 	int serverPort = 31486;
+	private PB_handler handler;
 
 	private AsyncCallback m_fnReceiveHandler;
 	private AsyncCallback m_fnSendHandler;
@@ -26,7 +27,8 @@ public class NetworkClient : MonoBehaviour{
 	Socket m_client = null;
 
 	void Start(){
-		m_fnReceiveHandler = handleDataRecive;
+		handler = GameObject.Find ("PB_handler").GetComponent<PB_handler>();
+		m_fnReceiveHandler = handleDataSend;
 		m_fnSendHandler = handleDataSend;
 		StartClient ();
 	}
@@ -113,6 +115,7 @@ public class NetworkClient : MonoBehaviour{
 		if(sentBytes > 0){
 			Byte[] msgByte = new Byte[sentBytes];
 			Array.Copy (ao.Buffer, msgByte, sentBytes);
+			handler.handleDataRecive (msgByte);
 		}
 	}
 
